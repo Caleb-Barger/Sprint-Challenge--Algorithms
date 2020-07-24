@@ -9,6 +9,11 @@ class SortingRobot:
         self._light = "OFF"     # The state of the robot's light
         self._time = 0          # A time counter (stretch)
 
+    def not_holding_anything(self):
+        if self._item is None:
+            return True
+        return False
+
     def can_move_right(self):
         """
         Returns True if the robot can move right or False if it's
@@ -43,7 +48,7 @@ class SortingRobot:
         This will increment the time counter by 1.
         """
         self._time += 1
-        if self._position > 0:
+        if self._position > 0:  
             self._position -= 1
             return True
         else:
@@ -96,8 +101,37 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # if the robot is not holding anything swap items
+        if self.not_holding_anything():
+            self.swap_item()
+        # if the light is not on
+        if not self.light_is_on():
+            # if robot can move right and the next item is smaller
+            if self.can_move_right() and self.compare_item() == 1:
+                # move right
+                self.move_right()
+            # if the robot can move right and the next item is larger 
+            # - and the robot can move left
+            if self.can_move_right() and self.compare_item() == -1 and self.can_move_left():
+                # move left and swap
+                self.move_left()
+                self.swap_item()
+        # if cant move right than
+        if not self.can_move_right():
+            # turn the light on
+            self.set_light_on()
+            # move back and swap
+            self.move_left()
+            self.swap_item()
+        # if cant move left
+        if not self.can_move_left():
+            # turn the light off
+            self.set_light_off()
+            return self.sort()
+
+
+
+        
 
 
 if __name__ == "__main__":

@@ -15,6 +15,7 @@ given n story building, at f floor or higer dropping eggs will break
 dropping eggs one floor lower than f however will not break the egg
 how can we find the floor where dropped + broken eggs is low!
 
+BST...
 To minimize eggs broken we would check the middle floor first (if it is odd num just round down), if the egg does not break than we 
 know that f = mid + 1, otherwise we now have 2 sections (branches) where f floor could be (everything below mid & everything above mid + 1)
 now that we have broken the possible locations of floor f into 2 parts we can then delegate the work of locating floor f
